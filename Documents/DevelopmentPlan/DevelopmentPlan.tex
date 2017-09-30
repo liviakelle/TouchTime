@@ -2,20 +2,21 @@
 
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{hyperref}
 
-\title{SE 3XA3: Development Plan\\Title of Project}
+\title{SE 3XA3: Development Plan\\TouchTime}
 
-\author{Team \#, Team Name
-		\\ Student 1 name and macid
-		\\ Student 2 name and macid
-		\\ Student 3 name and macid
+\author{Team 13, Team: ELM
+		\\ Matthew Po and pom
+		\\ Livia Kelle and kellel
+		\\ Evan Ansell and ansellaea
 }
 
 \date{}
 
-\input{../Comments}
 
 \begin{document}
+
 
 \begin{table}[hp]
 \caption{Revision History} \label{TblRevisionHistory}
@@ -23,9 +24,8 @@
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
-... & ... & ...\\
+September 29, 2017 & Matthew Po & Initial development plan draft\\
+% ... & ... & ...\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -34,25 +34,69 @@ Date2 & Name(s) & Description of changes\\
 
 \maketitle
 
-Put your introductory blurb here.
+\textit{By virtue of submitting this document I electronically sign and date that the work being submitted is my own individual work}
 
 \section{Team Meeting Plan}
+...
+
+Our group will meet twice per week right after the labs in a Thode study room. On Monday, we will meet from 6:30 to 7:00 pm to debrief what progress has been made on the weekend. On Thursdays we will have a longer meeting from 4:30 to 6 pm to give us an opportunity to see what progress has been made and decide what everyone’s tasks will be for the rest of the week. This will give us the weekend to work on our parts of the project. Each meeting will be chaired by a different member of the team on a rotating basis. The chair of the meeting will be responsible for filling out a detailed agenda and we will be using the format from SE 2XB3. This format also includes some meeting minutes so that we can see what has been discussed at each meeting. 
+
 
 \section{Team Communication Plan}
+...
+
+Our team will communicate through the use of a Facebook group chat. This is the best method of communication for us because each of us has access to to messenger on our mobile devices and allows everyone to be involved in the discussions about decisions for the project on short notice. 
 
 \section{Team Member Roles}
+\textbf{Matthew Po} - Back-End Developer, Project Documentation Lead
+
+\noindent
+\textbf{Livia Kelle} - Back-End Developer, Scrum Master
+
+\noindent
+\textbf{Evan Ansell} - UI Developer, QA Master
+
+\vspace{0.33mm}
+Note that each member of the team will contribute to the full documentation and development of this project.
 
 \section{Git Workflow Plan}
+...
+
+For the development of our program, we will be using a development branch off of which each member will create a feature branch for whichever part of the application they are working on at the time. Once the individual features are complete they will be merged back into the development branch. At various release checkpoints the development branch will be merged into the master branch.
+\vspace{0.8cm}
+
+For our documents and deliverables we will create a temporary branch for each which will be merged back into the master branch when complete.
+
 
 \section{Proof of Concept Demonstration Plan}
+...
+
+\href{https://play.google.com/store/apps/details?id=sk.martinflorek.wear.feelthewear&hl=en}{Feel The Wear} is an Android application that allows users to choose custom vibration patterns for notifications for their 3rd party applications (facebook, twitter, etc.) This application is proof that manipulation of the vibration patterns for an android smartwatch is feasible. By modifying some of the back-end code and integrating it with a custom front-end watchface, our project goals are feasible. The team has also done research on vibration patterns in relation to telling time. \href{https://link.springer.com/chapter/10.1007/978-3-540-69057-3_116}{This} article highlights the different techniques for translating vibration into time. 
+\vspace{0.8cm}
+
+The largest risk associated with our project is that none of our team members have developed on an Android platform before and so there will be a bit of a learning curve that we will need to overcome if we are to create a useful application in our time frame. In order to demonstrate that our project will be feasible, we will aim to create for the proof of concept demonstration a very basic application for the Android Watch that will show a clock face and at least respond to touch with a vibration.
 
 \section{Technology}
+...
+
+The application that we are creating will be designed to run on an Android Watch. Since it will be running in an Android environment will be using the Android Studio IDE and programming it in Java. With Android Studio we will be able to create many unit tests and run them along with a large test suite. Android Studio also allows us to use emulators which will aid greatly in the testing process.
 
 \section{Coding Style}
+...
+
+For the purposes of this project, our team will adhere to the Android Open Source Project (AOSP) Java Code style. These are the coding standards that must be followed for any formal Android development in Android Studio. 
 
 \section{Project Schedule}
+...
 
-Provide a pointer to your Gantt Chart.
+Include Gantt Chart
+
+Show milestones
+
+Resource assignment
+
+Nobody over 100\% commitment
+
 
 \section{Project Review}
 
