@@ -12,17 +12,16 @@
 }
 \usepackage[round]{natbib}
 
-\title{SE 3XA3: Software Requirements Specification\\Title of Project}
+\title{SE 3XA3: Software Requirements Specification\\TouchTime}
 
-\author{Team \#, Team Name
-		\\ Student 1 name and macid
-		\\ Student 2 name and macid
-		\\ Student 3 name and macid
+\author{Team 13, ELM
+		\\ Matthew Po - pom
+		\\ Evan Ansell - ansellea
+		\\ Livia Kelle - kellel
 }
 
-\date{\today}
 
-\input{../Comments}
+\date{October 6, 2017}
 
 \begin{document}
 
@@ -38,8 +37,8 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+October 5, 2017 & 1.0 & Initial Draft\\
+October 6, 2017 & 1.1 & Added charts, other requirements, final draft\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -48,103 +47,238 @@ Date 2 & 1.1 & Notes\\
 
 \pagenumbering{arabic}
 
-This document describes the requirements for ....  The template for the Software
+This document describes the requirements for the TouchTime project The template for the Software
 Requirements Specification (SRS) is a subset of the Volere
-template~\citep{RobertsonAndRobertson2012}.  If you make further modifications
-to the template, you should explicity state what modifications were made.
+template.  
+% If you make further modifications
+% to the template, you should explicity state what modifications were made.
 
 \section{Project Drivers}
 
 \subsection{The Purpose of the Project}
+The purpose of the TouchTime project is to create an Android Smartwatch application that is able to communicate the current time through vibration patterns for users that are visually impaired or who would like to be able to tell the time without looking.
 
 \subsection{The Stakeholders}
 
 \subsubsection{The Client}
 
+The Client for this project will consist of the SFWR 3XA3 TA's and any other potential project reviewers, mainly for the purposes of the SFWR 3XA3 class.  
+
 \subsubsection{The Customers}
 
+The Customers this product will target for will be the visually-impaired and people who want to tell the time surreptitiously.
+
 \subsubsection{Other Stakeholders}
+
+The other Stakeholders this product will impact will be those who own an Android smart-watch and wish to use our product. We can accomplish this through continuous improvements alongside customer reviews and feedback. 
 
 \subsection{Mandated Constraints}
 
 \subsection{Naming Conventions and Terminology}
 
-\subsection{Relevant Facts and Assumptions}
+\begin{center}
+    \begin{tabular}{| l | l | p{5cm} | }
+    \hline
+    Term & Definition \\ \hline
+    ELM & The project team name \\ \hline
+    The application & The TouchTime application \\ \hline
+    \end{tabular}
+\end{center}
 
-User characteristics should go under assumptions.
+\subsection{Relevant Facts and Assumptions}
+The project operates under the assumptions that:
+\vspace{2mm}
+
+\noindent 1). the user of the product is able to physically touch (or virtually through a VM) an android smart-watch
+
+\noindent 2). the user of the product is able to touch both the hour and minute hand on the watch-face and be able to distinguish the two (i.e. fingers are not too big that it covers the watch face entirely)
+
+\noindent 3). the device in which the application operates in must be on Android Wear 2.0 or later
 
 \section{Functional Requirements}
 
 \subsection{The Scope of the Work and the Product}
+...
+
+ELM will create the software product \textbf{TouchTime} that will allow people to tell the time by using the sense of touch alone. Our software will provide users with the vibration feedback in order to tell time, and it will be usable on Android Wear 2.0 and Android OS 7.1.1 (or later) devices
 
 \subsubsection{The Context of the Work}
+...
+
+The product is intended to be used by people who are visually impaired or who simply want to be able to tell the time without looking at their watch. As such, simplicity and ease of use should be a priority in order to help our users quickly and accurately tell the time.
 
 \subsubsection{Work Partitioning}
 
-\subsubsection{Individual Product Use Cases}
+\begin{center}
+    \begin{tabular}{| l | l | l | p{5cm} | }
+    \hline
+    Work Number & Work Name & Work Requirements \\ \hline
+    1 & Watch Face Design & Graphics and Code \\ \hline
+    2 & Vibration Feedback & Code \\ \hline
+    3 & Time and Vibration Calculation & Code \\ \hline
+    4 & State Transitions & Code \\ \hline
+    \end{tabular}
+\end{center}
 
+\subsubsection{Individual Product Use Cases}
+...
+
+Since our product is designed to be used equally by people who are visually impaired and those who are not, there will only be one general user type.
+\vspace{2mm}
+
+To begin to tell the time, a user will touch the face of their android watch with the TouchTime application open. To stop at any time the user simply removes their finger from the face.
+\vspace{2mm}
+
+\noindent Use: \textbf{TellHour}
+
+User touches quadrant where the hour hand lies:
+	Device will vibrate once if a.m., twice if p.m. and then pause.
+	Device will then vibrate once for each hour it is past the beginning of the quadrant (so if it is 7pm, it would vibrate once).
+\vspace{2mm}
+
+\noindent Use: \textbf{TellMinutes}
+
+Following telling the hour, user touches the 10-minute-section where the minute hand lies:
+	Device will vibrate once then pause.
+	Device will then vibrate once for each minute it is past the beginning of the 10-minute-section (so if it is 7:13, it would vibrate 3 times).
+
+\newpage
 \subsection{Functional Requirements}
+
+1). The Software shall display a standard analogue-style watch face.
+
+\noindent 2). The software shall enter TouchTime mode when the user touches the face
+
+\noindent 3. The software shall stop the touch process when the user removes their finger
+
+\noindent 4). The software shall indicate the hour with a series of vibrations when the user touches the quadrant containing the hour hand
+
+\noindent 5). The software shall indicate the hour with a series of vibrations when the user touches the 10-minute section containing the minute hand.
 
 \section{Non-functional Requirements}
 
 \subsection{Look and Feel Requirements}
 
+The appearance of the applications should be that of a clock face displaying the current time.
+
 \subsection{Usability and Humanity Requirements}
+
+\subsubsection{Ease of Use Requirements}
+
+This applications shall usable by anyone who is capable of touching a smart-watch and shall be usable by persons with impaired visions.
+
+
+\subsubsection{Ease of Learning Requirements}
+
+The user should be capable of opening an application on an Android smart-watch and should be able to touch a screen. 
 
 \subsection{Performance Requirements}
 
+\subsubsection{Speed Requirements}
+
+The applications should respond within one second of being touched to indicate the time
+
+\subsubsection{Safety Critical Requirement}
+
+There are no critical safety hazards associated with this project. This is left to the hardware specifications of the physical machine in which the application operates on. 
+
+\subsubsection{Precision Requirement}
+
+The application shall tell the time within the precision of one minute at which the watch face was first tapped
+
+\subsubsection{Capacity Requirement}
+
+The application shall not exceed the load for the Android smart-watch
+
 \subsection{Operational and Environmental Requirements}
+
+\subsubsection{Expected Physical Environment}
+
+The application shall be used on an Android smart-watch that is at least version 8.
 
 \subsection{Maintainability and Support Requirements}
 
+The application shall be maintained with every Android OS update to ensure compatibility
+
 \subsection{Security Requirements}
+
+The application should not compromise the security of Smart-watch and should keep all user information confidential.
 
 \subsection{Cultural Requirements}
 
+The application shall be usable by any culture familiar with a 12-hour clock. The application shall not be offensive to any cultural group.
+
 \subsection{Legal Requirements}
+
+The application shall comply with all Canadian laws.
 
 \subsection{Health and Safety Requirements}
 
-This section is not in the original Volere template, but health and safety are
-issues that should be considered for every engineering project.
+The application should not cause the Android smart-watch to dangerously overheat or vibrate in a way that may be damaging.
 
 \section{Project Issues}
 
 \subsection{Open Issues}
 
+- Android watch hardware dependencies for Android Studio
+
+\noindent - Vibration manipulation dependencies for Android Studio
+
 \subsection{Off-the-Shelf Solutions}
+
+ELM can make references to previous implementation of project; format code similar to basic software components / backbone of project
+
 
 \subsection{New Problems}
 
+- Navigating Android Studio environment
+
+\noindent - Keeping up with AOSP programming conventions
+
+\noindent - UI integration with back-end code
+
 \subsection{Tasks}
 
-\subsection{Migration to the New Product}
+- familiarize with AOSP programming convention
+
+\noindent - familiarize with Android studio environment for Android Wear Application development
+
+\noindent - implementation
+
+- add vibration manipulation dependencies
+
+- UI
+
+- integration of back-end with front-end
+
+\noindent - proof-of-concept demonstration preparation
+
+\noindent - document changes
 
 \subsection{Risks}
 
+- not completing project on time due to scope; in terms of being able to manipulate how the watch vibrates in response to a screen touch
+
+\noindent - hardware lag in terms of vibrational response on Android watch
+
+\noindent (There are no major risks to the project development at this point in time)
+
 \subsection{Costs}
+
+- Cost to develop the software is free (Android Studio, Android development learning tools)
+
+\noindent - Cost to test the software is free; Android studio provides us with an emulator for testing applications on a virtual machine
+
+\noindent - Cost to hard-test the software on a physical machine depends on the type of machine the user wants to test on (Watch). This can range anywhere from \$99 to \$499
+
+\noindent - ELM recognizes the cost to purchase a physical machine is feasible but inefficient. However, the team is already equipped with a personal smart-watch by one of the group members, allowing us to test on the hardware in real-time.
 
 \subsection{User Documentation and Training}
 
-\subsection{Waiting Room}
-
-\subsection{Ideas for Solutions}
+Training for android development and Android studio environment in general can be found \href{https://developer.android.com/index.html}{here}
 
 \bibliographystyle{plainnat}
 
 \bibliography{SRS}
-
-\newpage
-
-\section{Appendix}
-
-This section has been added to the Volere template.  This is where you can place
-additional information.
-
-\subsection{Symbolic Parameters}
-
-The definition of the requirements will likely call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.
-
 
 \end{document}
