@@ -73,7 +73,7 @@ The Customers this product will target for will be the visually-impaired and peo
 The other Stakeholders this product will impact will be those who own an Android smart-watch and wish to use our product. We can accomplish this through continuous improvements alongside customer reviews and feedback. 
 
 \subsection{Mandated Constraints}
-
+% add something here, of why you chose to omit any detail, i.e. prove it
 \subsection{Naming Conventions and Terminology}
 
 \begin{center}
@@ -88,22 +88,19 @@ The other Stakeholders this product will impact will be those who own an Android
 \subsection{Relevant Facts and Assumptions}
 The project operates under the assumptions that:
 \vspace{2mm}
-
-\noindent 1). the user of the product is able to physically touch (or virtually through a VM) an android smart-watch
+% use proper latex bulleting!
+\noindent 1). the user of the product is able to physically touch (or virtually interact through a VM) an Android smart-watch
 
 \noindent 2). the user of the product is able to touch both the hour and minute hand on the watch-face and be able to distinguish the two (i.e. fingers are not too big that it covers the watch face entirely)
 
-\noindent 3). the device in which the application operates in must be on Android Wear 2.0 or later
-
-\section{Functional Requirements}
-
+\noindent 3). the device in which the application operates in must be on Android Wear 2.0 or later % why this version? Are you sure you aren't... constrained?
 \subsection{The Scope of the Work and the Product}
-...
+... % why this?
 
-ELM will create the software product \textbf{TouchTime} that will allow people to tell the time by using the sense of touch alone. Our software will provide users with the vibration feedback in order to tell time, and it will be usable on Android Wear 2.0 and Android OS 7.1.1 (or later) devices
+ELM will create the software product \textbf{TouchTime} that will allow people to tell the time by using the sense of touch alone. Our software will provide users with the vibration feedback in order to tell time, and it will be usable on Android Wear 2.0 and Android OS 7.1.1 (or later) devices. % already stated
 
 \subsubsection{The Context of the Work}
-...
+... % whhhhhhhy?
 
 The product is intended to be used by people who are visually impaired or who simply want to be able to tell the time without looking at their watch. As such, simplicity and ease of use should be a priority in order to help our users quickly and accurately tell the time.
 
@@ -121,7 +118,7 @@ The product is intended to be used by people who are visually impaired or who si
 \end{center}
 
 \subsubsection{Individual Product Use Cases}
-...
+... % whhhhhhhy?
 
 Since our product is designed to be used equally by people who are visually impaired and those who are not, there will only be one general user type.
 \vspace{2mm}
@@ -149,9 +146,9 @@ Following telling the hour, user touches the 10-minute-section where the minute 
 
 \noindent 2). The software shall enter TouchTime mode when the user touches the face
 
-\noindent 3. The software shall stop the touch process when the user removes their finger
+\noindent 3. The software shall stop the touch process when the user removes their finger % what is the touch process?
 
-\noindent 4). The software shall indicate the hour with a series of vibrations when the user touches the quadrant containing the hour hand
+\noindent 4). The software shall indicate the hour with a series of vibrations when the user touches the quadrant containing the hour hand % how many times? be specific
 
 \noindent 5). The software shall indicate the hour with a series of vibrations when the user touches the 10-minute section containing the minute hand.
 
@@ -165,18 +162,18 @@ The appearance of the applications should be that of a clock face displaying the
 
 \subsubsection{Ease of Use Requirements}
 
-This applications shall usable by anyone who is capable of touching a smart-watch and shall be usable by persons with impaired visions.
+This applications shall usable by anyone who is capable of touching a smart-watch and shall be usable by persons with impaired visions. 
 
 
 \subsubsection{Ease of Learning Requirements}
 
-The user should be capable of opening an application on an Android smart-watch and should be able to touch a screen. 
+The user should be capable of opening an application on an Android smart-watch and should be able to touch a screen. % not a requirement of the system, maybe assumption?
 
 \subsection{Performance Requirements}
 
 \subsubsection{Speed Requirements}
 
-The applications should respond within one second of being touched to indicate the time
+The applications should respond within one second of being touched to indicate the time % symbolic parameter
 
 \subsubsection{Safety Critical Requirement}
 
@@ -188,17 +185,17 @@ The application shall tell the time within the precision of one minute at which 
 
 \subsubsection{Capacity Requirement}
 
-The application shall not exceed the load for the Android smart-watch
+The application shall not exceed the load for the Android smart-watch % android is open source, how can you be sure?
 
 \subsection{Operational and Environmental Requirements}
 
 \subsubsection{Expected Physical Environment}
 
-The application shall be used on an Android smart-watch that is at least version 8.
+The application shall be used on an Android smart-watch that is at least version 8. % not physical
 
 \subsection{Maintainability and Support Requirements}
 
-The application shall be maintained with every Android OS update to ensure compatibility
+The application shall be maintained with every Android OS update to ensure compatibility % elapsed time between dev OS release and app release?
 
 \subsection{Security Requirements}
 
@@ -214,10 +211,10 @@ The application shall comply with all Canadian laws.
 
 \subsection{Health and Safety Requirements}
 
-The application should not cause the Android smart-watch to dangerously overheat or vibrate in a way that may be damaging.
+The application should not cause the Android smart-watch to dangerously overheat or vibrate in a way that may be damaging. % nice!
 
 \section{Project Issues}
-
+% reformat this to paragraph form
 \subsection{Open Issues}
 
 - Android watch hardware dependencies for Android Studio
@@ -275,7 +272,7 @@ ELM can make references to previous implementation of project; format code simil
 
 \subsection{User Documentation and Training}
 
-Training for android development and Android studio environment in general can be found \href{https://developer.android.com/index.html}{here}
+Training for android development and Android studio environment in general can be found \href{https://developer.android.com/index.html}{here} % this is for the user, not dev team
 
 \bibliographystyle{plainnat}
 
