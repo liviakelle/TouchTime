@@ -29,12 +29,12 @@
 \newcommand{\mthemnum}{M\themnum}
 \newcommand{\mref}[1]{M\ref{#1}}
 
-\title{SE 3XA3: Software Requirements Specification\\Title of Project}
+\title{SE 3XA3: Software Requirements Specification\\TouchTime}
 
 \author{Team \#13, ELM
-    \\ Evan Ansell - ansellea
-    \\ Livia Kelle - kellel
-    \\ Matthew Po - pom
+		\\ Evan Ansell - ansellea
+		\\ Livia Kelle - kellel
+		\\ Matthew Po - pom
 }
 
 \date{\today}
@@ -59,7 +59,8 @@
 09/11 & 1.0 & Introduction and Anticipated Changes\\
 09/11 & 1.1 & Unlikely Changes\\
 10/11 & 1.2 & Module Decomposition\\
-10/11 & 1.3 & .. \\
+10/11 & 1.3 & Module Hierarchy, Traceability Matrix \\
+10/11 & 1.4 & Use Hierarchy\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -137,9 +138,9 @@ unlikely changes are listed in Section \ref{SecUchange}.
 \begin{description}
 \item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
   hardware on which the software is running (Android Studio Compatible).
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] Vibration pattern to distinguish the time
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] Watch-face in which the app operates in
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] Additional functionality from watch app 
+\item[\refstepcounter{acnum} \actheacnum \label{acVP}:] Vibration pattern to distinguish the time
+\item[\refstepcounter{acnum} \actheacnum \label{acWF}:] Watch-face in which the app operates in
+\item[\refstepcounter{acnum} \actheacnum \label{acAF}:] Additional functionality from watch app 
 \end{description}
 
 \subsection{Unlikely Changes} \label{SecUchange}
@@ -167,10 +168,10 @@ actually be implemented.
 
 \begin{description}
 \item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Input Format Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Output Vibration Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Output Display Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Control Module
+\item [\refstepcounter{mnum} \mthemnum \label{mIF}:] Input Format Module
+\item [\refstepcounter{mnum} \mthemnum \label{mOV}:] Output Vibration Module
+\item [\refstepcounter{mnum} \mthemnum \label{mOD}:] Output Display Module
+\item [\refstepcounter{mnum} \mthemnum \label{mCT}:] Control Module
 \end{description}
 
 
@@ -184,19 +185,14 @@ actually be implemented.
 {Hardware-Hiding Module} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\ 
-& ?\\
+\multirow{3}{0.3\textwidth}{Behaviour-Hiding Module}
+& Input Format\\
+& Output Vibration\\
+& Output Display\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & {?}\\
-& ?\\
-& ?\\
+\multirow{1}{0.3\textwidth}{Software Decision Module}
+& Control\\
 \bottomrule
 
 \end{tabular}
@@ -228,7 +224,7 @@ that the module is not a leaf and will not have to be implemented. Whether or
 not this module is implemented depends on the programming language
 selected.
 
-\subsection{Hardware Hiding Modules (\mref{mInput})}
+\subsection{Hardware Hiding Modules (\mref{mHH})}
 
 \begin{description}
 \item[Secrets:]The data structure and algorithm used to implement the virtual
@@ -251,21 +247,21 @@ selected.
 \item[Implemented By:] Android Studio
 \end{description}
 
-\subsubsection{Input Format Module (\mref{mInput})}
+\subsubsection{Input Format Module (\mref{mIF})}
 \begin{description}
 \item[Secrets:]The format and structure of the input data.
 \item[Services:]Converts and categorizes user input data to match appropriate logic.
 \item[Implemented By:] Android Studio
 \end{description}
 
-\subsubsection{Output Vibration Module (\mref{mInput})}
+\subsubsection{Output Vibration Module (\mref{mOV})}
 \begin{description}
 \item[Secrets:] Calculated values of input data
 \item[Services:] Includes methods to send a vibrational response based on user input and current time stored on clock interface
 \item[Implemented By:] Android Studio
 \end{description}
 
-\subsubsection{Output Display Module (\mref{mInput})}
+\subsubsection{Output Display Module (\mref{mOD})}
 \begin{description}
 \item[Secrets:] Information on the hardware display in which the app operates in
 \item[Services:] Methods which draw and scale the watch face and UI to match the device in which the app is operating in.
@@ -286,7 +282,7 @@ selected.
 \item[Implemented By:] Android Studio
 \end{description}
 
-\subsubsection{Control Module}
+\subsubsection{Control Module (\mref{mCT})}
 \begin{description}
 \item[Secrets:] User input data
 \item[Services:] Methods which calculate the appropriate response to user input and time at which input was sent and received. 
@@ -307,17 +303,27 @@ requirements and between the modules and the anticipated changes.
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+R1 & \mref{mHH}, \mref{mOD}\\
+%1. The Software shall display a standard analogue-style watch face.
+R2 & \mref{mIF}\\
+%2).The software shall communicate the time through vibrations when the
+%user touches the watch face anywhere
+R3 &  \mref{mOV}, \mref{mCT}\\
+%3.The software shall indicate the hours by causing the Android smart-
+% watch to vibrate a corresponding number of short pulses
+R4 & \mref{mCT}\\
+%4). The software shall pause all vibrations for 3 seconds after indicating
+% the hours of the current time before indicating the hours
+R5 & \mref{mOV}, \mref{mCT}\\
+%5). The software shall indicate the minutes by vibrating a series of long,
+%medium and short pulses.
+%(a) The tens digit of the current minutes will be indicated by a cor-
+%responding number of long pulses
+%(b) If the ones digit of the current minutes is 5 or greater, this is
+%indicated by a single medium vibration
+%(c) The ones digit is indicated by a series of short pulses. If a medium
+%pulse occurred, the number of short pulses is added to 5 to indicate
+%the minutes.
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
@@ -331,17 +337,13 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \textbf{AC} & \textbf{Modules}\\
 \midrule
 \acref{acHardware} & \mref{mHH}\\
-\acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
-\acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+%The specific hardware on which the software is running (Android Studio Compatible).
+\acref{acVP} & \mref{mOV}\\
+%Vibration pattern to distinguish the time
+\acref{acWF} & \mref{mOD}\\
+%Watch-face in which the app operates in
+\acref{acAF} & \mref{mHH}, \mref{mOV}, \mref{mOD}, \mref{mCT}\\
+%Additional functionality from watch app 
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
@@ -363,7 +365,7 @@ because they use modules from the lower levels.
 
 \begin{figure}[H]
 \centering
-%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
+\includegraphics[width=0.8\textwidth]{UsesHierarchy.png}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
