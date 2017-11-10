@@ -37,8 +37,9 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-October 5, 2017 & 1.0 & Initial Draft\\
-October 6, 2017 & 1.1 & Added charts, other requirements, final draft\\
+Oct 5, 2017 & 1.0 & Initial Draft\\
+Oct 6, 2017 & 1.1 & Added charts, other requirements, final draft\\
+Nov 10, 2017 & 1.2 & Updated functional requirements\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -98,12 +99,12 @@ The project operates under the assumptions that:
 \section{Functional Requirements}
 
 \subsection{The Scope of the Work and the Product}
-...
+
 
 ELM will create the software product \textbf{TouchTime} that will allow people to tell the time by using the sense of touch alone. Our software will provide users with the vibration feedback in order to tell time, and it will be usable on Android Wear 2.0 and Android OS 7.1.1 (or later) devices
 
 \subsubsection{The Context of the Work}
-...
+
 
 The product is intended to be used by people who are visually impaired or who simply want to be able to tell the time without looking at their watch. As such, simplicity and ease of use should be a priority in order to help our users quickly and accurately tell the time.
 
@@ -121,7 +122,6 @@ The product is intended to be used by people who are visually impaired or who si
 \end{center}
 
 \subsubsection{Individual Product Use Cases}
-...
 
 Since our product is designed to be used equally by people who are visually impaired and those who are not, there will only be one general user type.
 \vspace{2mm}
@@ -144,16 +144,19 @@ Following telling the hour, user touches the 10-minute-section where the minute 
 
 \newpage
 \subsection{Functional Requirements}
+\begin{enumerate}
+\item The Software shall display a standard analogue-style watch face.
+\item The software shall communicate the time through vibrations when the user touches the watch face anywhere
+\item The software shall indicate the hours by causing the Android smartwatch to vibrate a corresponding number of short pulses
+\item The software shall pause all vibrations for 3 seconds after indicating the hours of the current time before indicating the hours
+\item The software shall indicate the minutes by vibrating a series of long, medium and short pulses.
+\begin{enumerate}
+\item The tens digit of the current minutes will be indicated by a corresponding number of long pulses
+\item If the ones digit of the current minutes is 5 or greater, this is indicated by a single medium vibration
+\item The ones digit is indicated by a series of short pulses. If a medium pulse occurred, the number of short pulses is added to 5 to indicate the minutes.
+\end{enumerate}
 
-1). The Software shall display a standard analogue-style watch face.
-
-\noindent 2). The software shall enter TouchTime mode when the user touches the face
-
-\noindent 3. The software shall stop the touch process when the user removes their finger
-
-\noindent 4). The software shall indicate the hour with a series of vibrations when the user touches the quadrant containing the hour hand
-
-\noindent 5). The software shall indicate the hour with a series of vibrations when the user touches the 10-minute section containing the minute hand.
+\end{enumerate}
 
 \section{Non-functional Requirements}
 
