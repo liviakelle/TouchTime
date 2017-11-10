@@ -52,7 +52,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class TouchTime extends CanvasWatchFaceService {
 
-    /*
+    /**
      * Update rate in milliseconds for interactive mode. We update once a second to advance the
      * second hand.
      */
