@@ -52,7 +52,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class TouchTime extends CanvasWatchFaceService {
 
-    /*
+    /**
      * Update rate in milliseconds for interactive mode. We update once a second to advance the
      * second hand.
      */
@@ -131,6 +131,9 @@ public class TouchTime extends CanvasWatchFaceService {
         private boolean mLowBitAmbient;
         private boolean mBurnInProtection;
 
+        /**
+         * Initialize watch face
+         */
         @Override
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
@@ -195,12 +198,19 @@ public class TouchTime extends CanvasWatchFaceService {
             mCalendar = Calendar.getInstance();
         }
 
+        /**
+         * Destroy watch face
+         */
         @Override
         public void onDestroy() {
             mUpdateTimeHandler.removeMessages(MSG_UPDATE_TIME);
             super.onDestroy();
         }
 
+        /**
+         * Get device features(burn-in, low-bit ambient)
+         * @param properties
+         */
         @Override
         public void onPropertiesChanged(Bundle properties) {
             super.onPropertiesChanged(properties);
@@ -208,12 +218,19 @@ public class TouchTime extends CanvasWatchFaceService {
             mBurnInProtection = properties.getBoolean(PROPERTY_BURN_IN_PROTECTION, false);
         }
 
+        /**
+         * changed time
+         */
         @Override
         public void onTimeTick() {
             super.onTimeTick();
             invalidate();
         }
 
+        /**
+         * Called when device enters / exits ambient mode
+         * @param inAmbientMode
+         */
         @Override
         public void onAmbientModeChanged(boolean inAmbientMode) {
             super.onAmbientModeChanged(inAmbientMode);
@@ -260,6 +277,11 @@ public class TouchTime extends CanvasWatchFaceService {
             }
         }
 
+        /**
+         * Called when the user changes interruption filter.
+         * The watch face should adjust the amount of information it displays.
+         * @param interruptionFilter
+         */
         @Override
         public void onInterruptionFilterChanged(int interruptionFilter) {
             super.onInterruptionFilterChanged(interruptionFilter);
@@ -275,6 +297,13 @@ public class TouchTime extends CanvasWatchFaceService {
             }
         }
 
+        /**
+         * Updates the watch face if the surface canvas (physical watch parameters) have changed
+         * @param holder
+         * @param format
+         * @param width
+         * @param height
+         */
         @Override
         public void onSurfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             super.onSurfaceChanged(holder, format, width, height);
@@ -332,8 +361,12 @@ public class TouchTime extends CanvasWatchFaceService {
         }
 
         /**
-         * Captures tap event (and tap type). The {@link WatchFaceService#TAP_TYPE_TAP} case can be
-         * used for implementing specific logic to handle the gesture.
+         * Captures tap event (and tap type).
+         * Method to hold commands when the watch face is interacted with a touch
+         * @param tapType
+         * @param x
+         * @param y
+         * @param eventTime
          */
         @Override
         public void onTapCommand(int tapType, int x, int y, long eventTime) {
@@ -386,6 +419,11 @@ public class TouchTime extends CanvasWatchFaceService {
             invalidate();
         }
 
+        /**
+         * Draw the watch face with hour, minute, and second hands
+         * @param canvas
+         * @param bounds
+         */
         @Override
         public void onDraw(Canvas canvas, Rect bounds) {
             long now = System.currentTimeMillis();
@@ -479,6 +517,10 @@ public class TouchTime extends CanvasWatchFaceService {
             }
         }
 
+        /**
+         * Called to inform you of the watch face becoming visible or hidden
+         * @param visible
+         */
         @Override
         public void onVisibilityChanged(boolean visible) {
             super.onVisibilityChanged(visible);
