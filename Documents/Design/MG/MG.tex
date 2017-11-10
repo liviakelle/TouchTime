@@ -31,15 +31,16 @@
 
 \title{SE 3XA3: Software Requirements Specification\\Title of Project}
 
-\author{Team \#, Team Name
-		\\ Student 1 name and macid
-		\\ Student 2 name and macid
-		\\ Student 3 name and macid
+\author{Team \#13, ELM
+    \\ Evan Ansell - ansellea
+    \\ Livia Kelle - kellel
+    \\ Matthew Po - pom
 }
 
 \date{\today}
 
-\input{../../Comments}
+%TODO?
+%\input{../../Comments}
 
 \begin{document}
 
@@ -55,8 +56,10 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+09/11 & 1.0 & Introduction and Anticipated Changes\\
+09/11 & 1.1 & Unlikely Changes\\
+10/11 & 1.2 & Module Decomposition\\
+10/11 & 1.3 & .. \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -125,18 +128,18 @@ unlikely changes are listed in Section \ref{SecUchange}.
 
 \subsection{Anticipated Changes} \label{SecAchange}
 
-Anticipated changes are the source of the information that is to be hidden
-inside the modules. Ideally, changing one of the anticipated changes will only
-require changing the one module that hides the associated decision. The approach
-adapted here is called design for
-change.
+% Anticipated changes are the source of the information that is to be hidden
+% inside the modules. Ideally, changing one of the anticipated changes will only
+% require changing the one module that hides the associated decision. The approach
+% adapted here is called design for
+% change.
 
 \begin{description}
 \item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
-  hardware on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-  initial input data.
-\item ...
+  hardware on which the software is running (Android Studio Compatible).
+\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] Vibration pattern to distinguish the time
+\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] Watch-face in which the app operates in
+\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] Additional functionality from watch app 
 \end{description}
 
 \subsection{Unlikely Changes} \label{SecUchange}
@@ -149,11 +152,10 @@ will potentially need to be modified. Hence, it is not intended that these
 decisions will be changed.
 
 \begin{description}
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
-  (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] The app will not be backwards compatible (assumption is that the app will not be run on Android Wear SDK previous to Android 8.0(O) )
 \item[\refstepcounter{ucnum} \uctheucnum \label{ucInput}:] There will always be
   a source of input data external to the software.
-\item ...
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucInput}:] The goal of the system: To tell the time through vibrations
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
@@ -165,7 +167,10 @@ actually be implemented.
 
 \begin{description}
 \item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item ...
+\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Input Format Module
+\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Output Vibration Module
+\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Output Display Module
+\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Control Module
 \end{description}
 
 
@@ -223,7 +228,7 @@ that the module is not a leaf and will not have to be implemented. Whether or
 not this module is implemented depends on the programming language
 selected.
 
-\subsection{Hardware Hiding Modules (\mref{mHH})}
+\subsection{Hardware Hiding Modules (\mref{mInput})}
 
 \begin{description}
 \item[Secrets:]The data structure and algorithm used to implement the virtual
@@ -243,19 +248,29 @@ selected.
   documents. This module serves as a communication layer between the
   hardware-hiding module and the software decision module. The programs in this
   module will need to change if there are changes in the SRS.
-\item[Implemented By:] --
+\item[Implemented By:] Android Studio
 \end{description}
 
 \subsubsection{Input Format Module (\mref{mInput})}
-
 \begin{description}
 \item[Secrets:]The format and structure of the input data.
-\item[Services:]Converts the input data into the data structure used by the
-  input parameters module.
-\item[Implemented By:] [Your Program Name Here]
+\item[Services:]Converts and categorizes user input data to match appropriate logic.
+\item[Implemented By:] Android Studio
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Output Vibration Module (\mref{mInput})}
+\begin{description}
+\item[Secrets:] Calculated values of input data
+\item[Services:] Includes methods to send a vibrational response based on user input and current time stored on clock interface
+\item[Implemented By:] Android Studio
+\end{description}
+
+\subsubsection{Output Display Module (\mref{mInput})}
+\begin{description}
+\item[Secrets:] Information on the hardware display in which the app operates in
+\item[Services:] Methods which draw and scale the watch face and UI to match the device in which the app is operating in.
+\item[Implemented By:] Android Studio
+\end{description}
 
 
 \subsection{Software Decision Module}
@@ -268,10 +283,16 @@ selected.
   do not provide direct interaction with the user. 
   % Changes in these modules are more likely to be motivated by a desire to
   % improve performance than by externally imposed changes.
-\item[Implemented By:] --
+\item[Implemented By:] Android Studio
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Control Module}
+\begin{description}
+\item[Secrets:] User input data
+\item[Services:] Methods which calculate the appropriate response to user input and time at which input was sent and received. 
+\item[Implemented By:] Android Studio
+\end{description}
+
 
 \section{Traceability Matrix} \label{SecTM}
 
