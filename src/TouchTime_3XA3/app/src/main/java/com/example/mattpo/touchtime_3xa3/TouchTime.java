@@ -384,9 +384,15 @@ public class TouchTime extends CanvasWatchFaceService {
                     int hour_hand = mCalendar.get(Calendar.HOUR);
                     int minute_hand = mCalendar.get(Calendar.MINUTE);
 
+                    //timeCalc(hour_hand, minute_hand);
                     // The user has completed the tap gesture.
                     // TODO: Add code to handle the tap gesture.
 
+                    //vibCalc takes the current time and calculates out how many of each vibration to perform..
+                    //undecided if we will take those and return them, or just pass to vibration method.
+                    vibCalc(hour_hand, minute_hand);
+
+                    /* OLD DEMO CODE
                     Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
                     long [] vibrationPatternA = {0, 500, 50, 300};
                     long [] vibrationPatternB = {0, 50, 500, 50};
@@ -415,6 +421,8 @@ public class TouchTime extends CanvasWatchFaceService {
                     // Log.i(ON_TAP, "vibrating... x: " + x + " y: " + y);
                     // Log.i(ON_TAP, VIBRATE_MESSAGE);
                     break;
+                */
+
             }
             invalidate();
         }
@@ -590,6 +598,31 @@ public class TouchTime extends CanvasWatchFaceService {
                         - (timeMs % INTERACTIVE_UPDATE_RATE_MS);
                 mUpdateTimeHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, delayMs);
             }
+        }
+
+        /**
+         * Calculates the required number of each vibration, then sends the numbers to
+         * a vibrate method which applies the vibration pattern to each type and outputs
+         * vibrations to user.
+         * @param hour
+         * @param minute
+         */
+        private void vibCalc(int hour, int minute){
+            Log.i("HOUR",String.valueOf(hour));
+            Log.i("MINUTE",String.valueOf(minute));
+
+            //int hourNum = hour;
+            int minuteLong = minute / 10;
+            int minuteMid = (minute - minuteLong*10) / 5;
+            int minuteShort = minute - minuteLong*10 - minuteMid*5;
+
+            Log.i("MINLONG", String.valueOf(minuteLong));
+            Log.i("MINMID", String.valueOf(minuteMid));
+            Log.i("MINSHORT", String.valueOf(minuteShort));
+
+            //TODO vibration method
+            //sends number of vibrations for each pattern to vibration method
+            vibrate(hour, minuteLong, minuteMid, minuteShort);
         }
     }
 }
