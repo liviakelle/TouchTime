@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="TouchTime" company="McMaster SFWR 3XA3 - Group 13" webLink="http://" view-date="2017-10-07" view-index="0" gantt-divider-location="469" resource-divider-location="300" version="2.8.5" locale="en_CA">
+<?xml version="1.0" encoding="UTF-8"?><project name="TouchTime" company="McMaster SFWR 3XA3 - Group 13" webLink="http://" view-date="2017-09-16" view-index="0" gantt-divider-location="469" resource-divider-location="300" version="2.8.5" locale="en_CA">
     <description><![CDATA[This is the Development Plan for the TouchTime Project
 ]]></description>
     <view zooming-state="default:3" id="gantt-chart">
         <field id="tpd3" name="Name" width="216" order="0"/>
         <field id="tpd4" name="Begin date" width="117" order="1"/>
         <field id="tpd5" name="End date" width="117" order="2"/>
-        <timeline><![CDATA[117,60,82,103,44,51,56,112,53]]></timeline>
+        <timeline><![CDATA[82,53,117,112,56,103,44,60,51]]></timeline>
         <option id="color.recent"><![CDATA[#66ff66 #66ffff #33ff33 #ff3333 #6666ff #0000cc]]></option>
     </view>
     <view id="resource-table">
@@ -70,13 +70,13 @@
             <task id="103" name="Boundary Cases" color="#8cb6ce" meeting="false" start="2017-10-19" duration="4" complete="0" expand="true"/>
             <task id="105" name="Review and submit" color="#8cb6ce" meeting="false" start="2017-10-24" duration="4" complete="0" expand="true"/>
         </task>
-        <task id="125" name="Testing" color="#66ff66" meeting="false" start="2017-10-27" duration="11" complete="0" expand="true">
-            <task id="135" name="Proof of Concept" color="#66ff66" meeting="false" start="2017-10-27" duration="7" complete="0" expand="true"/>
-            <task id="148" name="Unit Tests" color="#66ff66" meeting="false" start="2017-10-27" duration="10" complete="0" expand="true"/>
-            <task id="137" name="Functional Tests - Left and Right" color="#66ff66" meeting="false" start="2017-11-03" duration="4" complete="0" expand="true"/>
-            <task id="145" name="Functional Tests- Abnormal" color="#66ff66" meeting="false" start="2017-11-03" duration="4" complete="0" expand="true"/>
-            <task id="129" name="Useability" color="#66ff66" meeting="false" start="2017-10-27" duration="10" complete="0" expand="true"/>
-            <task id="131" name="Performance" color="#66ff66" meeting="false" start="2017-11-06" duration="5" complete="0" expand="true"/>
+        <task id="125" name="Testing" color="#66ff66" meeting="false" start="2017-10-27" duration="25" complete="0" expand="true">
+            <task id="135" name="Proof of Concept" color="#66ff66" meeting="false" start="2017-10-27" duration="20" complete="0" expand="true"/>
+            <task id="148" name="Unit Tests" color="#66ff66" meeting="false" start="2017-10-27" duration="25" complete="0" expand="true"/>
+            <task id="137" name="Functional Tests - Watchface" color="#66ff66" meeting="false" start="2017-11-03" duration="12" complete="0" expand="true"/>
+            <task id="145" name="Functional Tests- Abnormal" color="#66ff66" meeting="false" start="2017-11-03" duration="17" complete="0" expand="true"/>
+            <task id="129" name="Useability" color="#66ff66" meeting="false" start="2017-10-27" duration="25" complete="0" expand="true"/>
+            <task id="131" name="Performance" color="#66ff66" meeting="false" start="2017-11-06" duration="15" complete="0" expand="true"/>
         </task>
         <task id="108" name="Design Document" meeting="false" start="2017-10-27" duration="10" complete="0" expand="true">
             <task id="109" name="Module Guide" color="#8cb6ce" meeting="false" start="2017-10-27" duration="7" complete="0" expand="true">
