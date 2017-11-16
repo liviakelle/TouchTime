@@ -378,50 +378,20 @@ public class TouchTime extends CanvasWatchFaceService {
                     // The user has started a different gesture or otherwise cancelled the tap.
                     break;
                 case TAP_TYPE_TAP:
+                    // The user has completed the tap gesture.
                     long now = System.currentTimeMillis();
                     mCalendar.setTimeInMillis(now);
 
-                    int hour_hand = mCalendar.get(Calendar.HOUR);
-                    int minute_hand = mCalendar.get(Calendar.MINUTE);
-
-                    //timeCalc(hour_hand, minute_hand);
-                    // The user has completed the tap gesture.
-                    // TODO: Add code to handle the tap gesture.
+                    int hour_vib = mCalendar.get(Calendar.HOUR);
+                    int minute_vib = mCalendar.get(Calendar.MINUTE);
 
                     //vibCalc takes the current time and calculates out how many of each vibration to perform..
                     //undecided if we will take those and return them, or just pass to vibration method.
-                    vibCalc(hour_hand, minute_hand);
+                    int [] vibs = vibCalc(hour_vib, minute_vib);
 
-                    /* OLD DEMO CODE
-                    Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-                    long [] vibrationPatternA = {0, 500, 50, 300};
-                    long [] vibrationPatternB = {0, 50, 500, 50};
-
-                    long [] vibrationPatternGrid = {0, 300, 50, 300, 50, 600, 50, 600};
-
-                    final int indexInPatterToRepeat = -1;
-                    if (x < 150) {
-                        Toast.makeText(getApplicationContext(), R.string.message_left, Toast.LENGTH_SHORT)
-                                .show();
-                        if (hour_hand == 5)
-                        {
-                            vibrator.vibrate(vibrationPatternGrid, indexInPatterToRepeat);
-                        }
-//                        vibrator.vibrate(vibrationPatternA, indexInPatterToRepeat);
-                        Log.i(ON_TAP, "vibrating left");
-                    }
-                    else{Toast.makeText(getApplicationContext(), R.string.message_right, Toast.LENGTH_SHORT)
-                            .show();
-                        vibrator.vibrate(vibrationPatternB, indexInPatterToRepeat);
-                        Log.i(ON_TAP, "vibrating right");
-                    }
-
-//                    Log.i(ON_TAP, Integer.toString(mCalendar.get(Calendar.HOUR)));
-//                    Log.i(ON_TAP, Integer.toString(mCalendar.get(Calendar.MINUTE)));
-                    // Log.i(ON_TAP, "vibrating... x: " + x + " y: " + y);
-                    // Log.i(ON_TAP, VIBRATE_MESSAGE);
-                    break;
-                */
+                    //TODO vibration method
+                    //sends number of vibrations for each pattern to vibration method
+                    vibrate(vibs);
 
             }
             invalidate();
@@ -607,22 +577,61 @@ public class TouchTime extends CanvasWatchFaceService {
          * @param hour
          * @param minute
          */
-        private void vibCalc(int hour, int minute){
+        private int [] vibCalc(int hour, int minute){
             Log.i("HOUR",String.valueOf(hour));
             Log.i("MINUTE",String.valueOf(minute));
 
+            int [] vibCount = new int [4];
+            vibCount[0] = hour;
+
             //int hourNum = hour;
             int minuteLong = minute / 10;
+            vibCount[1] = minuteLong;
             int minuteMid = (minute - minuteLong*10) / 5;
+            vibCount[2] = minuteMid;
             int minuteShort = minute - minuteLong*10 - minuteMid*5;
+            vibCount[3] = minuteShort;
 
+            Log.i("HOURHVIB", String.valueOf(hour));
             Log.i("MINLONG", String.valueOf(minuteLong));
             Log.i("MINMID", String.valueOf(minuteMid));
             Log.i("MINSHORT", String.valueOf(minuteShort));
 
-            //TODO vibration method
-            //sends number of vibrations for each pattern to vibration method
-            vibrate(hour, minuteLong, minuteMid, minuteShort);
+            return vibCount;
+        }
+
+        private void vibrate(int [] vibs){
+            //TODO Add Vibrate Method
+            /* OLD DEMO CODE
+                    Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                    long [] vibrationPatternA = {0, 500, 50, 300};
+                    long [] vibrationPatternB = {0, 50, 500, 50};
+
+                    long [] vibrationPatternGrid = {0, 300, 50, 300, 50, 600, 50, 600};
+
+                    final int indexInPatterToRepeat = -1;
+                    if (x < 150) {
+                        Toast.makeText(getApplicationContext(), R.string.message_left, Toast.LENGTH_SHORT)
+                                .show();
+                        if (hour_hand == 5)
+                        {
+                            vibrator.vibrate(vibrationPatternGrid, indexInPatterToRepeat);
+                        }
+//                        vibrator.vibrate(vibrationPatternA, indexInPatterToRepeat);
+                        Log.i(ON_TAP, "vibrating left");
+                    }
+                    else{Toast.makeText(getApplicationContext(), R.string.message_right, Toast.LENGTH_SHORT)
+                            .show();
+                        vibrator.vibrate(vibrationPatternB, indexInPatterToRepeat);
+                        Log.i(ON_TAP, "vibrating right");
+                    }
+
+//                    Log.i(ON_TAP, Integer.toString(mCalendar.get(Calendar.HOUR)));
+//                    Log.i(ON_TAP, Integer.toString(mCalendar.get(Calendar.MINUTE)));
+                    // Log.i(ON_TAP, "vibrating... x: " + x + " y: " + y);
+                    // Log.i(ON_TAP, VIBRATE_MESSAGE);
+                    break;
+                */
         }
     }
 }
