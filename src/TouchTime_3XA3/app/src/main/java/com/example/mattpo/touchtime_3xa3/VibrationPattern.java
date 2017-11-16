@@ -9,9 +9,10 @@ import java.util.Arrays;
  */
 
 public class VibrationPattern {
-    public ArrayList<Long> signalVib = new ArrayList<Long>(Arrays.asList(50L, 1000L));
+    public ArrayList<Long> signalVib = new ArrayList<Long>(Arrays.asList(1500L, 0L));
     public ArrayList<Long> longVib = new ArrayList<Long>(Arrays.asList(50L, 500L));
-    public ArrayList<Long> medVib = new ArrayList<Long>(Arrays.asList(50L, 300L));
-    public ArrayList<Long> shortVib = new ArrayList<Long>(Arrays.asList(50L, 100L));
+    public ArrayList<Long> medVib = new ArrayList<Long>(Arrays.asList(50L, 1250L));
+    public ArrayList<Long> shortVib = new ArrayList<Long>(Arrays.asList(50L, 150L));
+    public ArrayList<Long> delayVib = new ArrayList<Long>(Arrays.asList(550L, 0L));
 
 }

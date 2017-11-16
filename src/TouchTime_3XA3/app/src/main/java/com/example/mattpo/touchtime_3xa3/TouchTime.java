@@ -580,6 +580,7 @@ public class TouchTime extends CanvasWatchFaceService {
          * vibrations to user.
          * @param hour
          * @param minute
+         * @return vibCount
          */
         private int [] vibCalc(int hour, int minute){
 //            Log.i("HOUR",String.valueOf(hour));
@@ -596,14 +597,13 @@ public class TouchTime extends CanvasWatchFaceService {
             int minuteShort = minute - minuteLong*10 - minuteMid*5;
             vibCount[3] = minuteShort;
 
-//            Log.i("HOURHVIB", String.valueOf(hour));
-//            Log.i("MINLONG", String.valueOf(minuteLong));
-//            Log.i("MINMID", String.valueOf(minuteMid));
-//            Log.i("MINSHORT", String.valueOf(minuteShort));
-
             return vibCount;
         }
 
+        /**
+         * Calculate the vibration pattern and send to Vibrator module
+         * @param vibs
+         */
         private void vibrate(int [] vibs){
             //TODO Add Vibrate Method
 
@@ -615,6 +615,7 @@ public class TouchTime extends CanvasWatchFaceService {
             ArrayList<Long> mediumVib = vibPat.medVib;
             ArrayList<Long> shortVib = vibPat.shortVib;
             ArrayList<Long> signalVib = vibPat.signalVib;
+            ArrayList<Long> delayVib = vibPat.delayVib;
 
             ArrayList<Long> vibPatList = new ArrayList<Long>();
 
@@ -628,10 +629,13 @@ public class TouchTime extends CanvasWatchFaceService {
                 vibPatList.addAll(longVib);
             }
 
+            vibPatList.addAll(delayVib);
+
             for (int i = 0; i < vibs[2]; i++) {
                 vibPatList.addAll(mediumVib);
             }
 
+            vibPatList.addAll(delayVib);
             for (int i = 0; i < vibs[3]; i++) {
                 vibPatList.addAll(shortVib);
             }
@@ -641,44 +645,13 @@ public class TouchTime extends CanvasWatchFaceService {
             vibPattern = new long[vibPatList.size()];
             Long[] tempHold = vibPatList.toArray(new Long[vibPatList.size()]);
 
-            for (int i = 0; i < tempHold.length; i++)
-            {
+            for (int i = 0; i < tempHold.length; i++) {
                 vibPattern[i] = tempHold[i].longValue();
             }
 
             Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
             vibrator.vibrate(vibPattern, indexInPatternToRepeat);
-            Log.i(ON_TAP, "vibComp");
-            /* OLD DEMO CODE
-                    Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-                    long [] vibrationPatternA = {0, 500, 50, 300};
-                    long [] vibrationPatternB = {0, 50, 500, 50};
-
-                    long [] vibrationPatternGrid = {0, 300, 50, 300, 50, 600, 50, 600};
-
-                    final int indexInPatterToRepeat = -1;
-                    if (x < 150) {
-                        Toast.makeText(getApplicationContext(), R.string.message_left, Toast.LENGTH_SHORT)
-                                .show();
-                        if (hour_hand == 5)
-                        {
-                            vibrator.vibrate(vibrationPatternGrid, indexInPatterToRepeat);
-                        }
-//                        vibrator.vibrate(vibrationPatternA, indexInPatterToRepeat);
-                        Log.i(ON_TAP, "vibrating left");
-                    }
-                    else{Toast.makeText(getApplicationContext(), R.string.message_right, Toast.LENGTH_SHORT)
-                            .show();
-                        vibrator.vibrate(vibrationPatternB, indexInPatterToRepeat);
-                        Log.i(ON_TAP, "vibrating right");
-                    }
-
-//                    Log.i(ON_TAP, Integer.toString(mCalendar.get(Calendar.HOUR)));
-//                    Log.i(ON_TAP, Integer.toString(mCalendar.get(Calendar.MINUTE)));
-                    // Log.i(ON_TAP, "vibrating... x: " + x + " y: " + y);
-                    // Log.i(ON_TAP, VIBRATE_MESSAGE);
-                    break;
-                */
+            Log.i(ON_TAP, "Vibration Complete");
         }
     }
 }
