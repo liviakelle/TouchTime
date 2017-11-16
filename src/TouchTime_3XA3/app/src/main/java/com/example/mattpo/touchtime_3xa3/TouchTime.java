@@ -32,6 +32,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
+import android.support.v4.content.res.TypedArrayUtils;
 import android.support.v7.graphics.Palette;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceService;
@@ -44,6 +45,9 @@ import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
 
 /**
  * Analog watch face with a ticking second hand. In ambient mode, the second hand isn't
@@ -578,8 +582,8 @@ public class TouchTime extends CanvasWatchFaceService {
          * @param minute
          */
         private int [] vibCalc(int hour, int minute){
-            Log.i("HOUR",String.valueOf(hour));
-            Log.i("MINUTE",String.valueOf(minute));
+//            Log.i("HOUR",String.valueOf(hour));
+//            Log.i("MINUTE",String.valueOf(minute));
 
             int [] vibCount = new int [4];
             vibCount[0] = hour;
@@ -592,16 +596,59 @@ public class TouchTime extends CanvasWatchFaceService {
             int minuteShort = minute - minuteLong*10 - minuteMid*5;
             vibCount[3] = minuteShort;
 
-            Log.i("HOURHVIB", String.valueOf(hour));
-            Log.i("MINLONG", String.valueOf(minuteLong));
-            Log.i("MINMID", String.valueOf(minuteMid));
-            Log.i("MINSHORT", String.valueOf(minuteShort));
+//            Log.i("HOURHVIB", String.valueOf(hour));
+//            Log.i("MINLONG", String.valueOf(minuteLong));
+//            Log.i("MINMID", String.valueOf(minuteMid));
+//            Log.i("MINSHORT", String.valueOf(minuteShort));
 
             return vibCount;
         }
 
         private void vibrate(int [] vibs){
             //TODO Add Vibrate Method
+
+            VibrationPattern vibPat = new VibrationPattern();
+            final int indexInPatternToRepeat = -1;
+            long [] vibPattern;
+
+            ArrayList<Long> longVib = vibPat.longVib;
+            ArrayList<Long> mediumVib = vibPat.medVib;
+            ArrayList<Long> shortVib = vibPat.shortVib;
+            ArrayList<Long> signalVib = vibPat.signalVib;
+
+            ArrayList<Long> vibPatList = new ArrayList<Long>();
+
+            for (int i = 0; i < vibs[0]; i++) {
+                vibPatList.addAll(longVib);
+            }
+
+            vibPatList.addAll(signalVib);
+
+            for (int i = 0; i < vibs[1]; i++) {
+                vibPatList.addAll(longVib);
+            }
+
+            for (int i = 0; i < vibs[2]; i++) {
+                vibPatList.addAll(mediumVib);
+            }
+
+            for (int i = 0; i < vibs[3]; i++) {
+                vibPatList.addAll(shortVib);
+            }
+
+            Log.i(ON_TAP, vibPatList.toString());
+
+            vibPattern = new long[vibPatList.size()];
+            Long[] tempHold = vibPatList.toArray(new Long[vibPatList.size()]);
+
+            for (int i = 0; i < tempHold.length; i++)
+            {
+                vibPattern[i] = tempHold[i].longValue();
+            }
+
+            Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+            vibrator.vibrate(vibPattern, indexInPatternToRepeat);
+            Log.i(ON_TAP, "vibComp");
             /* OLD DEMO CODE
                     Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
                     long [] vibrationPatternA = {0, 500, 50, 300};
