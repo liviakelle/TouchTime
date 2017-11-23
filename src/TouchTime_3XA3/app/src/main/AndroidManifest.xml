@@ -3,9 +3,11 @@
     package="com.example.mattpo.touchtime_3xa3">
 
     <uses-feature android:name="android.hardware.type.watch" />
+
+    <!-- To allow vibration manipulation   -->
     <uses-permission android:name="android.permission.VIBRATE"/>
 
-    <!-- Required to act as a custom watch face. -->
+    <!-- To allow "always-on" application. -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application android:allowBackup="true" android:icon="@mipmap/ic_launcher"
