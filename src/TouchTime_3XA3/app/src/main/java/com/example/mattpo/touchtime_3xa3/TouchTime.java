@@ -391,7 +391,6 @@ public class TouchTime extends CanvasWatchFaceService {
                     int minute_vib = mCalendar.get(Calendar.MINUTE);
 
                     //vibCalc takes the current time and calculates out how many of each vibration to perform..
-                    //undecided if we will take those and return them, or just pass to vibration method.
                     int [] vibs = vibCalc(hour_vib, minute_vib);
 
                     //TODO vibration method
