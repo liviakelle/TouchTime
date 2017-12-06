@@ -391,11 +391,13 @@ public class TouchTime extends CanvasWatchFaceService {
                     int minute_vib = mCalendar.get(Calendar.MINUTE);
 
                     //vibCalc takes the current time and calculates out how many of each vibration to perform..
-                    int [] vibs = vibCalc(hour_vib, minute_vib);
+                    int [] vibs = VibrationMethods.vibCalc(hour_vib, minute_vib);
 
-                    //TODO vibration method
-                    //sends number of vibrations for each pattern to vibration method
-                    vibrate(vibs);
+                    //create vibration pattern
+                    long[] vibPattern = VibrationMethods.vibPatternMaker(vibs);
+
+                    //sends vibration pattern to vibration method
+                    vibrate(vibPattern);
 
             }
             invalidate();
@@ -600,14 +602,16 @@ public class TouchTime extends CanvasWatchFaceService {
 
         /**
          * Calculate the vibration pattern and send to Vibrator module
-         * @param vibs
+         * @param vibPattern
          */
-        private void vibrate(int [] vibs) {
+        private void vibrate(long[] vibPattern) {//int [] vibs) {
             PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
 
             PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK,
                     "WatchFaceWakelockTag"); // note WakeLock spelling
 
+            final int indexInPatternToRepeat = -1;
+            /*
             VibrationPattern vibPat = new VibrationPattern();
             final int indexInPatternToRepeat = -1;
             long [] vibPattern;
@@ -657,7 +661,11 @@ public class TouchTime extends CanvasWatchFaceService {
                 vibPattern[i] = tempHold[i].longValue();
                 duration += vibPattern[i];
             }
-
+*/
+            int duration = 0;
+            for (int i = 0; i < vibPattern.length; i++){
+                duration += vibPattern[i];
+            }
 //            Log.i(ON_TAP, Integer.toString(duration));
             Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
             wakeLock.acquire();
