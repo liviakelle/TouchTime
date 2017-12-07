@@ -30,6 +30,7 @@
 \usepackage{tabularx}
 \usepackage{hyperref}
 \usepackage{float}
+\usepackage[normalem]{ulem}
 \hypersetup{
     colorlinks,
     citecolor=black,
@@ -70,6 +71,9 @@ October 26 & 1.0.2 & Matt created functional tests \\
 October 27 & 1.0.4 & Evan created PoC tests and unit tests and parts of section 1\\
 October 27 & 1.0.5 & Livia edited parts of section 1 and 2\\
 October 27 & 1.0.6 & Final revision - everything else by everyone\\
+December 6 & 1.1 & Livia edited test cases to match current implementation, fixed JUnit spelling\\
+December 6 & 1.1.1 & Evan edited unit testing plan to match current implementation\\
+December 6 & 1.1.1 & Evan edited Table 3 to be more readable, added JUnit to testing tools\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -109,12 +113,12 @@ SRS & Software Requirements Specification\\
 \toprule
 \textbf{Term} & \textbf{Definition}\\
 \midrule
-TouchTime & Name of the Android smartwatch application. \\
-Functional Test (Black Box) & Analyzes program by probing with various inputs; not concerned with how processing occurs, only results \\
-Structural Test (White Box) & Analyzes program with test data with knowledge of implementation; concerned with how processing occurs \\
-Static Test & Testing that does not involving code execution\\
-Dynamic Test & Testing involving execution of code.\\
-Automatic Test & Tests completed by testing tool such as Junit\\
+TouchTime & Name of the Android smartwatch application. \\ \hline
+Functional Test (Black Box) & Analyzes program by probing with various inputs; not concerned with how processing occurs, only results \\ \hline
+Structural Test (White Box) & Analyzes program with test data with knowledge of implementation; concerned with how processing occurs \\ \hline
+Static Test & Testing that does not involving code execution\\ \hline
+Dynamic Test & Testing involving execution of code.\\ \hline
+Automatic Test & Tests completed by testing tool such as JUnit\\ \hline
 Manual Test & Tests conducted by people, by hand \\
 \bottomrule
 \end{tabularx}
@@ -134,10 +138,11 @@ TouchTime is an Android smart-watch application that enables users to know the t
 The software will be tested by Matthew Po, Evan Ansell, and Livia Kelle. 
 
 \subsection{Automated Testing Approach}
-The software will be tested using the JUnit testing framework against an emulator that is running the TouchTime software. Each vibration sent by the code to the watch emulator will be logged into logcat in Android Studio. We can use JUnit to assert that the logs are being sent, which is an implication that the code has successfully executed and the watch is vibrating. Note that the test cases are being used to test against the software telling the watch to vibrate, and not used to test the emulators response (i.e. the physical vibration). 
+The software will be tested using the JUnit testing framework against an emulator that is running the TouchTime software. Each vibration sent by the code to the watch emulator will be logged into logcat in Android Studio. We can use JUnit to assert that the \sout{logs are being sent} output of our funtions matches our expected result, which is an implication that the code has successfully executed and the watch is vibrating. Note that the test cases are being used to test against the software telling the watch to vibrate, and not used to test the emulators response (i.e. the physical vibration). We have to assume that the watch's hardware will be functioning correctly.
 
 \subsection{Testing Tools}
-Laptop running Android Studio with an Android Watch Emulator
+Laptop running Android Studio with an Android Watch Emulator, as well as on an Android Wear 2.0 watch.
+We will use JUnit for our software-based unit testing.
 
 \subsection{Testing Schedule}
 		
@@ -149,64 +154,59 @@ See Gantt Chart in the Project Schedule folder. The bright green indicates the t
 
 \subsubsection{Vibration Test on Screen Touch}
 		
-\paragraph{Vibrate Pattern Left Screen}
 
 \begin{enumerate}
 
-\item{test-fl1\\}
+\item{test-f1\\}
 
 Type: Functional, Dynamic, Manual
 					
 Initial State: Application installed and launched on Android smartwatch. 
 					
-Input: User touches left half of watch emulator.
+Input: User touches watch face twice at a given time, on the hour.
 					
-Output: Distinct vibration pattern for hour hand. Logcat log to indicate the screen has responded to the touch and vibration has occurred.  
+Output: Distinct vibration pattern for current time. Logcat log to indicate the screen has responded to the touch and vibration has occurred.  
 					
 How test will be performed: Compare Logcat log pattern to pattern that should have occurred at the given hour. Repeat at various hour times, such as 12, 1, 2, 3, 9, 10. 
 					
-\item{test-fl2\\}
-
-Type: Functional, Dynamic, Automatic
-					
-Initial State: Application installed and launched on Android smartwatch. 
-					
-Input: Simulated touch on left half of watch emulator.
-					
-Output: Distinct vibration pattern for hour hand. Logcat log to indicate the screen has responded to the touch and vibration has occurred.  
-					
-How test will be performed: Automatically compare Logcat log pattern to pattern that should have occurred at the given hour. Repeat at every hour for 12 hours.
-
-\end{enumerate}
-\paragraph{Vibrate Pattern Right Screen}
-
-\begin{enumerate}
-
-\item{test-fr1\\}
+\item{test-f2\\}
 
 Type: Functional, Dynamic, Manual
 					
 Initial State: Application installed and launched on Android smartwatch. 
 					
-Input: User touches right half of watch emulator.
+Input: User touches watch face twice at a given time, at between 1-9 minutes past the hour.
 					
-Output: Distinct vibration pattern for minute hand. Logcat log to indicate the screen has responded to the touch and vibration has occurred.  
+Output: Distinct vibration pattern for current time. Logcat log to indicate the screen has responded to the touch and vibration has occurred.  
 					
-How test will be performed: Compare Logcat log pattern to pattern that should have occurred at the given hour. Repeat at various minutes, such as 00, 01, 09, 15, 20, 29, 45, 55, 59. 
-					
-\item{test-fr2\\}
+How test will be performed: Compare Logcat log pattern to pattern that should have occurred at the given time. Repeat at various times, such as 1:01, 2:05, 3:09. 
 
-Type: Functional, Dynamic, Automatic
+\item{test-f3\\}
+
+Type: Functional, Dynamic, Manual
 					
 Initial State: Application installed and launched on Android smartwatch. 
 					
-Input: Simulated touch on right half of watch emulator.
+Input: User touches watch face twice at a given time, at a multiple of 10 past the hour.
 					
-Output: Distinct vibration pattern for minute hand. Logcat log to indicate the screen has responded to the touch and vibration has occurred.  
+Output: Distinct vibration pattern for current time. Logcat log to indicate the screen has responded to the touch and vibration has occurred.  
 					
-How test will be performed: Automatically compare Logcat log pattern to pattern that should have occurred at the given hour. Repeat every minute for one hour.
+How test will be performed: Compare Logcat log pattern to pattern that should have occurred at the given time. Repeat at various times, such as 1:10, 2:50, 3:30. 
+
+\item{test-f4\\}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: Application installed and launched on Android smartwatch. 
+					
+Input: User touches watch face twice at a given time, at a time where the digit in the tens and ones place for the minutes is not 0.
+					
+Output: Distinct vibration pattern for current time. Logcat log to indicate the screen has responded to the touch and vibration has occurred.  
+					
+How test will be performed: Compare Logcat log pattern to pattern that should have occurred at the given time. Repeat at various times, such as 1:11, 2:52, 3:37. 
 
 \end{enumerate}
+
 
 \subsubsection{Abnormal Situations}
 
@@ -218,35 +218,24 @@ Type: Functional, Dynamic, Manual
 					
 Initial State: Application installed and launched on Android smartwatch. 
 					
-Input: User touches left half of watch emulator and then right half before hours are fully indicated through vibrations.
+Input: User very quickly double taps watch face.
 					
-Output: Distinct vibration pattern for hour and minute hand. Logcat log to indicate the screen has responded to the left touch and vibration has occurred, but stops upon right touch.
+Output: Distinct vibration pattern for current time. Logcat log to indicate the screen has responded to the touch and vibration has occurred.
 					
-How test will be performed: Compare Logcat log pattern to pattern that should have occurred at the hour and minute. See where hour pattern was cut off and determine if minutes were correctly indicated at that point. 
+How test will be performed: Depending on how fast the user taps, the watch may not register it as two separate taps. This test will consist of the user tapping the watch twice at smaller and smaller time intervals to see where the cut off is for the watch to only register a single tap.
 					
-\item{test-fr2\\}
+\item{test-fa2\\}
 
 Type: Functional, Dynamic, Manual
 					
 Initial State: Application installed and launched on Android smartwatch. 
 					
-Input: User touches left half of watch emulator at 11:59 and hours are indicated. User then touches the right half after the time changes to 12:00.
+Input: User touches the watch during daylight savings time when the time skips an hour.
 					
-Output: Distinct vibration pattern for hour and minute hand. Logcat log to indicate the screen has responded to the left and right touch and vibration has occurred.
+Output: Distinct vibration pattern for current time. Logcat log to indicate the screen has responded to the touch and vibration has occurred.
 					
-How test will be performed: Compare Logcat log pattern to pattern that should have occurred at the hour and minute. The time indicated should be 11:00 due to this timing error, as the user will receive the hour vibration pattern for 11:59 and the minute vibration pattern for 12:00. This is an incorrect but expected behavior that will be corrected in future revision.
+How test will be performed: Compare Logcat log pattern to pattern that should have occurred at the given time. The time is received directly from the smartwatch itself, so it should be indicated correctly.
 
-\item{test-fr3\\}
-
-Type: Structural, Dynamic, Automatic
-					
-Initial State: Application installed and launched on Android smartwatch. 
-					
-Input: Simulated simultaneous touch on both left and right halves of watch emulator.
-					
-Output: Expected: Exception.
-					
-How test will be performed: A computer-driven test. The watch is not able to read out both hour and minute simultaneously, and so an exception should be produced that will be handled. No output should be produced for the user.
 
 \end{enumerate}
 
@@ -274,11 +263,11 @@ Type: Functional, Dynamic, Manual
 					
 Initial State: Application installed and launched on Android smartwatch. 
 					
-Input/Condition: Users must tap the left side of the watch face and after the watch finishes vibrating, the user taps the right side.
+Input/Condition: Users must tap the watch face twice, with a brief pause in between.
 					
-Output/Result: Percentage of users capable of correctly tapping left and right sides of the screen at appropriate times.
+Output/Result: Percentage of users capable of correctly tapping the watch screen at appropriate times.
 					
-How test will be performed: Users must tap the left side of the watch face to get TouchTime to vibrate the hours of the current time. After the hours are indicated, users will tap the right side of the watch face for the minutes. The percentage of users capable of performing these steps is recorded. 
+How test will be performed: Users must tap the watch face once to get out of ambient mode. Users must tap watch again to receive vibration feedback. The percentage of users capable of performing these steps is recorded. 
 
 \item{test-nf-u3\\}
 
@@ -286,23 +275,12 @@ Type: Functional, Dynamic, Manual
 					
 Initial State: Application installed and launched on Android smartwatch. Users have been taught how the vibration patterns correspond to the time.
 					
-Input/Condition: Users must tap the left side of the watch face and after the watch finishes vibrating, the user taps the right side.
+Input/Condition: Users must tap the watch face twice, with a brief pause in between.
 					
 Output/Result: Percentage of users capable of correctly identifying the time based off of the vibrations of the smartwatch. 
 					
-How test will be performed: Users must tap the left side of the watch face to get TouchTime to vibrate the hours of the current time. After the hours are indicated, users will tap the right side of the watch face for the minutes. They are allowed to practice this for 10 minutes. The users are then asked to perform the functions again and are asked what time was indicated by the watch. The percentage of users that answer this correctly is recorded. 
+How test will be performed: Users are taught how to use the application with a 2 minute tutorial by the tester. Users must tap the watch face once to get out of ambient mode. Users must tap watch again to receive vibration feedback. They are allowed to practice this for 1 minute. The users are then asked to perform the functions again and are asked what time was indicated by the watch. The percentage of users that answer this correctly is recorded. 
 
-\item{test-nf-u4\\}
-
-Type: Functional, Dynamic, Manual
-					
-Initial State: Application installed and launched on Android smartwatch. 
-					
-Input/Condition: Users must tap the left side of the watch face but before the watch finishes vibrating to indicate hours, the user taps the right side.
-					
-Output/Result: Smart watch vibrating to indicate hours until user taps right side at which point, the watch begins indicating the minutes. 
-					
-How test will be performed: Users must tap the left side of the watch face to get TouchTime to vibrate the hours of the current time. Users will the prematurely tap the right side of the watch face for the minutes before the hours are indicated. The users are then asked how many minutes were indicated by the watch. The percentage of users that answer this correctly is recorded. 
 
 \end{enumerate}
 
@@ -328,11 +306,11 @@ Type: Functional, Dynamic, Manual
 					
 Initial State: Application installed and launched on Android smart watch. 
 					
-Input: Users must tap the left side of the watch face.
+Input: Users must tap the watch face once.
 					
-Output: The hours of the current time are indicated through vibration.
+Output: The watch exits ambient mode.
 					
-How test will be performed: The user will tap the left side of the watch face and identify the hours of the current time indicated by TouchTime. The watch must respond to the user's tap and begin vibrating within one second.
+How test will be performed: The user will tap the watch face. The watch must respond to the user's tap and exit ambient mode within one second.
 
 \item{test-nf-p3\\}
 
@@ -340,11 +318,11 @@ Type: Functional, Dynamic, Manual
 					
 Initial State: Application installed and launched on Android smart watch. 
 					
-Input: Users must tap the right side of the watch face.
+Input: Users must tap the watch face twice, with a brief pause in between.
 					
-Output: The minutes of the current time are indicated through vibration.
+Output: The watch indicates the time through vibration.
 					
-How test will be performed: The user will tap the right side of the watch face and identify the minutes of the current time indicated by TouchTime. The watch must respond to the user's tap and begin vibrating within one second.
+How test will be performed:  The user will tap the watch face. The watch must respond to the user's tap and exit ambient mode within one second. The watch must respond to the user's second tap and begin vibrating within one second.
 
 \item{test-nf-p4\\}
 
@@ -352,36 +330,25 @@ Type: Functional, Dynamic, Manual
 					
 Initial State: Application installed and launched on Android smart watch. 
 					
-Input: Users must tap the left side of the watch face.
+Input: Users must tap the watch face twice, with a brief pause in between.
 					
-Output: The hours of the current time are indicated through vibration.
+Output: The watch indicates the time through vibration.
 					
-How test will be performed: The user will tap the left side of the watch face and identify the hours of the current time indicated by TouchTime. This must be accurate to the current hour within one second in real-time.
+How test will be performed: The user must tap the watch face once to get out of ambient mode and must tap watch again to receive vibration feedback. The time indicated must be accurate to the current time within one second in real-time.
 
-\item{test-nf-p5\\}
-
-Type: Functional, Dynamic, Manual
-					
-Initial State: Application installed and launched on Android smart watch. 
-					
-Input: Users must tap the right side of the watch face.
-					
-Output: The minutes of the current time are indicated through vibration.
-					
-How test will be performed: The user will tap the right side of the watch face and identify the minutes of the current time indicated by TouchTime. This must be accurate to the current minute within one second in real-time.
 
 \end{enumerate}
 
 
 \subsection{Traceability Between Test Cases and Requirements}
-The test cases for the functional requirements relating to vibration patterns can be traced directly to SRS 2.2.4 and 2.2.5, which indicate the vibration patterns for the hours and minutes.\\
+The test cases for the functional requirements relating to vibration patterns can be traced directly to SRS 2.4, 2.5, and 2.6, which indicate the vibration patterns for the hours and minutes. The test cases relating to ambient mode and taps can be traced back to SRS 2.2, 2.3 and 2.6. \\
 \newline
 For the non-functional requirements, the usability test cases can be traced back to the original usability requirements indicated in the SRS. Tests test-nf-u1 and test-nf-u2 can be traced back to the ease of use requirement 3.2.1, stating that the application shall be usable by anyone capable of touching the screen of a smart watch. The test case test-nf-u3 can be traced back to the ease of learning requirement 3.2.2, stating that the application shall be easy for anyone capable of using a smart watch to use. \\
 \newline
 In the case of performance, tests test-nf-p1,test-nf-p2, and test-nf-p3 can be traced to the speed requirements 3.3.1. Test-nf-p4 and test-nf-p5 can be traced to the precision requirement 3.3.4, stating the time must be accurate to within one second.
 
 \section{Tests for Proof of Concept}
-For our Proof of Concept, our objectives are to create an Android Wear application that displays a clock face and responds to distinct touches on the left and right side of the face with a unique vibration pattern for each side. Since it is only a basic application of which we are mostly concerned with the functionality, the early proof of concept tests to be performed are simple manual functional tests.
+For our Proof of Concept, our objectives were to create an Android Wear application that displays a clock face and responds to distinct touches on the left and right side of the face with a unique vibration pattern for each side. Since it is only a basic application of which we are mostly concerned with the functionality, the early proof of concept tests to be performed are simple manual functional tests.
 \subsection{Vibration Test on Screen Touch}
 		
 \paragraph{Vibration Pattern}
@@ -403,7 +370,7 @@ How test will be performed: We will tap the left side of the watch face on eithe
 					
 \item{test-pc-v2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
 Initial State: Application installed and launched on Android smartwatch. Smartwatch connected to laptop running Android Studio.
 					
@@ -417,16 +384,13 @@ How test will be performed: We will tap the right side of the watch face on eith
 \end{enumerate}
 	
 \section{Comparison to Existing Implementation}	
-Our TouchTime application will have a different functional implementation than the existing software. As such, direct functional comparisons will be difficult. Despite the different functionalities, our software has the same goal as the existing software, and the nonfunctional requirements (particularly usability and performance) that effect the user's experience will help us compare between the programs.
+Our TouchTime application will have a different functional implementation than the existing software - indicating time with a vibration pattern rather than by the position of the watch hands. As such, direct functional comparisons will be difficult. Despite the different functionalities, our software has the same goal as the existing software, and the nonfunctional requirements (particularly usability and performance) that effect the user's experience will help us compare between the programs.
 				
 \section{Unit Testing Plan}
-The Junit framework supplied with Android Studio will be used to complete unit testing. We will use Junit testing in order to quickly and efficiently perform structural tests, particularly on boundary conditions which may be hard to test manually such as boundary pixels for the left and right sides of the watch face.
+The JUnit framework supplied with Android Studio will be used to complete unit testing. We will use JUnit testing in order to quickly and efficiently perform structural tests, particularly on boundary conditions which may be hard to test manually such as exact times which would be hard to test manually. Since our application accepts only one kind of input - a tap - we decided that it would be unneccessary to do unit testing based on user input and that the input testing could be accounted for in manual tests.
 		
 \subsection{Unit testing of internal functions}
-Unit tests for internal functions will be capable of sending input to the functions through simulated gestures. It may be beneficial for us to create a driver that will perform these gestures. The internal functions that we will focus on will be the functions responsible for storing the time which will be read to the user, along with some simple tests such as making sure our pixel boundaries are set up correctly for registering left/right taps, and tests that make sure the application is correctly determining between a tap, short press, and a long press based on our time boundaries. 
-		
-\subsection{Unit testing of output files}		
-Unit tests for external functions will be capable of reading the output from the Logcat log files. For our methods, we can set certain messages to be sent to the log (such as listing out the vibration pattern sent and the time at which it was recorded). Our unit tests here will be helpful by covering the code for many scenarios and reading the logs to match each output to its expected result. If testing for any time, especially on the boundaries of maximum and minumum time allowed between presses, the vibration patterns should always match with the time being tested.
+Unit tests for internal functions will be performed by sending predefined input to the functions and comparing the output to the expected result. The internal functions that we will focus on will be the functions responsible for calculating the required number of vibrations according to the time and for creating the vibration pattern that will be output to the user.		
 
 \bibliographystyle{plainnat}
 
