@@ -31,9 +31,11 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
 import android.os.Vibrator;
 import android.support.v4.content.res.TypedArrayUtils;
 import android.support.v7.graphics.Palette;
+import android.support.wearable.activity.WearableActivityDelegate;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
@@ -239,7 +241,6 @@ public class TouchTime extends CanvasWatchFaceService {
         public void onAmbientModeChanged(boolean inAmbientMode) {
             super.onAmbientModeChanged(inAmbientMode);
             mAmbient = inAmbientMode;
-
             updateWatchHandStyle();
 
             /* Check and trigger whether or not timer should be running (only in active mode). */
@@ -586,16 +587,14 @@ public class TouchTime extends CanvasWatchFaceService {
 //            Log.i("HOUR",String.valueOf(hour));
 //            Log.i("MINUTE",String.valueOf(minute));
 
-            int [] vibCount = new int [4];
+            int [] vibCount = new int [3];
             vibCount[0] = hour;
 
             //int hourNum = hour;
             int minuteLong = minute / 10;
             vibCount[1] = minuteLong;
-            int minuteMid = (minute - minuteLong*10) / 5;
-            vibCount[2] = minuteMid;
-            int minuteShort = minute - minuteLong*10 - minuteMid*5;
-            vibCount[3] = minuteShort;
+            int minuteShort = minute % 10;
+            vibCount[2] = minuteShort;
 
             return vibCount;
         }
@@ -604,53 +603,71 @@ public class TouchTime extends CanvasWatchFaceService {
          * Calculate the vibration pattern and send to Vibrator module
          * @param vibs
          */
-        private void vibrate(int [] vibs){
-            //TODO Add Vibrate Method
+        private void vibrate(int [] vibs) {
+            PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+
+            PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK,
+                    "WatchFaceWakelockTag"); // note WakeLock spelling
 
             VibrationPattern vibPat = new VibrationPattern();
             final int indexInPatternToRepeat = -1;
             long [] vibPattern;
 
+            ArrayList<Long> minuteTensVib = vibPat.minuteTensVib;
             ArrayList<Long> longVib = vibPat.longVib;
-            ArrayList<Long> mediumVib = vibPat.medVib;
-            ArrayList<Long> shortVib = vibPat.shortVib;
+            ArrayList<Long> minuteOnesVib = vibPat.minuteOnesVib;
             ArrayList<Long> signalVib = vibPat.signalVib;
-            ArrayList<Long> delayVib = vibPat.delayVib;
+            ArrayList<Long> hourVib = vibPat.hourVib;
 
             ArrayList<Long> vibPatList = new ArrayList<Long>();
 
-            for (int i = 0; i < vibs[0]; i++) {
+            if (vibs[0] != 0) {
+                // Hours
+                for (int i = 0; i < vibs[0]; i++) {
+                    vibPatList.addAll(hourVib);
+                }
+                // Delay in between hours and minutes
+                vibPatList.addAll(signalVib);
+            }
+            else {
                 vibPatList.addAll(longVib);
+                vibPatList.addAll(signalVib);
             }
 
-            vibPatList.addAll(signalVib);
-
-            for (int i = 0; i < vibs[1]; i++) {
-                vibPatList.addAll(longVib);
+            if (vibs[1] != 0) {
+                // Minutes (Tens)
+                for (int i = 0; i < vibs[1]; i++) {
+                    vibPatList.addAll(minuteTensVib);
+                }
+                vibPatList.addAll(signalVib);
             }
 
-            vibPatList.addAll(delayVib);
-
-            for (int i = 0; i < vibs[2]; i++) {
-                vibPatList.addAll(mediumVib);
+            if (vibs[2] != 0) {
+                // Minutes (Ones)
+                for (int i = 0; i < vibs[2]; i++) {
+                    vibPatList.addAll(minuteOnesVib);
+                }
             }
 
-            vibPatList.addAll(delayVib);
-            for (int i = 0; i < vibs[3]; i++) {
-                vibPatList.addAll(shortVib);
-            }
-
-            Log.i(ON_TAP, vibPatList.toString());
+//            Log.i(ON_TAP, vibPatList.toString());
 
             vibPattern = new long[vibPatList.size()];
             Long[] tempHold = vibPatList.toArray(new Long[vibPatList.size()]);
-
+            int duration = 0;
             for (int i = 0; i < tempHold.length; i++) {
                 vibPattern[i] = tempHold[i].longValue();
+                duration += vibPattern[i];
             }
 
+//            Log.i(ON_TAP, Integer.toString(duration));
             Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+            wakeLock.acquire();
             vibrator.vibrate(vibPattern, indexInPatternToRepeat);
+            try{
+                TimeUnit.MILLISECONDS.sleep(duration);   // delay wakelock for duration of vibration
+            }
+            catch (InterruptedException e){}
+            wakeLock.release();
             Log.i(ON_TAP, "Vibration Complete");
         }
     }
