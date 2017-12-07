@@ -9,6 +9,13 @@ import java.util.ArrayList;
  */
 
 public class VibrationMethods {
+    /**
+     * Calculates the required number of each vibration and stores the values in an array.
+     * This array will be used to create the vibration pattern.
+     * @param hour
+     * @param minute
+     * @return vibPattern - an int[] designating number of each type of vibration required.
+     */
     public static int [] vibCalc(int hour, int minute){
 //            Log.i("HOUR",String.valueOf(hour));
 //            Log.i("MINUTE",String.valueOf(minute));
@@ -25,6 +32,13 @@ public class VibrationMethods {
         return vibCount;
     }
 
+
+    /**
+     * Takes the array designating number of each kind of vibration required and uses it to
+     * generate an array of timings for the device's vibrator - a vibration pattern.
+     * @param vibs
+     * @return vibPattern - a long[] containing the vibration pattern that the vibrator will use.
+     */
     public static long[] vibPatternMaker(int[] vibs) {
         VibrationPattern vibPat = new VibrationPattern();
         long[] vibPattern;
@@ -45,12 +59,12 @@ public class VibrationMethods {
             // Delay in between hours and minutes
             vibPatList.addAll(signalVib);
             Log.i("VIB", vibs[0] + " long vibration(s) (hours)");
-        } else {
+        } else { //case of 12 o'clock
             for (int i = 0; i < 12; i++) {
                 vibPatList.addAll(hourVib);
             }
             vibPatList.addAll(signalVib);
-            Log.i("VIB", " long vibration(s (hours)");
+            //Log.i("VIB", " long vibration(s) (hours)");
         }
 
         if (vibs[1] != 0) {
@@ -76,7 +90,6 @@ public class VibrationMethods {
         Long[] tempHold = vibPatList.toArray(new Long[vibPatList.size()]);
         for (int i = 0; i < tempHold.length; i++) {
             vibPattern[i] = tempHold[i].longValue();
-            Log.i("test", Long.toString(vibPattern[i]));
         }
 
         return vibPattern;
