@@ -5,16 +5,25 @@ android {
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.example.mattpo.touchtime_3xa3"
-        minSdkVersion 26
+        minSdkVersion 25
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        aaptOptions {
+            cruncherEnabled = false
+        }
+
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    //to allow android Log(cat) through unit testing
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 }
 
@@ -25,4 +34,8 @@ dependencies {
     compile ('com.android.support:palette-v7:26.0.0'){
         exclude group: 'com.android.support', module: 'palette-v7'
     }
+    // Required -- JUnit 4 framework
+    testCompile 'junit:junit:4.12'
+    // Optional -- Mockito framework
+    //testCompile 'org.mockito:mockito-core:1.10.19'
 }

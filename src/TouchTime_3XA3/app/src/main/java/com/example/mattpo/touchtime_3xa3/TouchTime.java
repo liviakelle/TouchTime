@@ -31,8 +31,11 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
 import android.os.Vibrator;
+import android.support.v4.content.res.TypedArrayUtils;
 import android.support.v7.graphics.Palette;
+import android.support.wearable.activity.WearableActivityDelegate;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
@@ -44,6 +47,9 @@ import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
 
 /**
  * Analog watch face with a ticking second hand. In ambient mode, the second hand isn't
@@ -52,7 +58,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class TouchTime extends CanvasWatchFaceService {
 
-    /*
+    /**
      * Update rate in milliseconds for interactive mode. We update once a second to advance the
      * second hand.
      */
@@ -131,6 +137,9 @@ public class TouchTime extends CanvasWatchFaceService {
         private boolean mLowBitAmbient;
         private boolean mBurnInProtection;
 
+        /**
+         * Initialize watch face
+         */
         @Override
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
@@ -195,12 +204,19 @@ public class TouchTime extends CanvasWatchFaceService {
             mCalendar = Calendar.getInstance();
         }
 
+        /**
+         * Destroy watch face
+         */
         @Override
         public void onDestroy() {
             mUpdateTimeHandler.removeMessages(MSG_UPDATE_TIME);
             super.onDestroy();
         }
 
+        /**
+         * Get device features(burn-in, low-bit ambient)
+         * @param properties
+         */
         @Override
         public void onPropertiesChanged(Bundle properties) {
             super.onPropertiesChanged(properties);
@@ -208,17 +224,23 @@ public class TouchTime extends CanvasWatchFaceService {
             mBurnInProtection = properties.getBoolean(PROPERTY_BURN_IN_PROTECTION, false);
         }
 
+        /**
+         * changed time
+         */
         @Override
         public void onTimeTick() {
             super.onTimeTick();
             invalidate();
         }
 
+        /**
+         * Called when device enters / exits ambient mode
+         * @param inAmbientMode
+         */
         @Override
         public void onAmbientModeChanged(boolean inAmbientMode) {
             super.onAmbientModeChanged(inAmbientMode);
             mAmbient = inAmbientMode;
-
             updateWatchHandStyle();
 
             /* Check and trigger whether or not timer should be running (only in active mode). */
@@ -260,6 +282,11 @@ public class TouchTime extends CanvasWatchFaceService {
             }
         }
 
+        /**
+         * Called when the user changes interruption filter.
+         * The watch face should adjust the amount of information it displays.
+         * @param interruptionFilter
+         */
         @Override
         public void onInterruptionFilterChanged(int interruptionFilter) {
             super.onInterruptionFilterChanged(interruptionFilter);
@@ -275,6 +302,13 @@ public class TouchTime extends CanvasWatchFaceService {
             }
         }
 
+        /**
+         * Updates the watch face if the surface canvas (physical watch parameters) have changed
+         * @param holder
+         * @param format
+         * @param width
+         * @param height
+         */
         @Override
         public void onSurfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             super.onSurfaceChanged(holder, format, width, height);
@@ -332,8 +366,13 @@ public class TouchTime extends CanvasWatchFaceService {
         }
 
         /**
-         * Captures tap event (and tap type). The {@link WatchFaceService#TAP_TYPE_TAP} case can be
-         * used for implementing specific logic to handle the gesture.
+         * Captures tap event (and tap type).
+         * Method to hold commands when the watch face is interacted with a touch
+         * This is the "main" function of our application.
+         * @param tapType
+         * @param x
+         * @param y
+         * @param eventTime
          */
         @Override
         public void onTapCommand(int tapType, int x, int y, long eventTime) {
@@ -345,47 +384,31 @@ public class TouchTime extends CanvasWatchFaceService {
                     // The user has started a different gesture or otherwise cancelled the tap.
                     break;
                 case TAP_TYPE_TAP:
+                    // The user has completed the tap gesture.
                     long now = System.currentTimeMillis();
                     mCalendar.setTimeInMillis(now);
 
-                    int hour_hand = mCalendar.get(Calendar.HOUR);
-                    int minute_hand = mCalendar.get(Calendar.MINUTE);
+                    int hour_vib = mCalendar.get(Calendar.HOUR);
+                    int minute_vib = mCalendar.get(Calendar.MINUTE);
 
-                    // The user has completed the tap gesture.
-                    // TODO: Add code to handle the tap gesture.
+                    //vibCalc takes the current time and calculates out how many of each vibration to perform..
+                    int [] vibs = VibrationMethods.vibCalc(hour_vib, minute_vib);
 
-                    Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-                    long [] vibrationPatternA = {0, 500, 50, 300};
-                    long [] vibrationPatternB = {0, 50, 500, 50};
+                    //create vibration pattern
+                    long[] vibPattern = VibrationMethods.vibPatternMaker(vibs);
 
-                    long [] vibrationPatternGrid = {0, 300, 50, 300, 50, 600, 50, 600};
+                    //sends vibration pattern to vibration method
+                    vibrate(vibPattern);
 
-                    final int indexInPatterToRepeat = -1;
-                    if (x < 150) {
-                        Toast.makeText(getApplicationContext(), R.string.message_left, Toast.LENGTH_SHORT)
-                                .show();
-                        if (hour_hand == 5)
-                        {
-                            vibrator.vibrate(vibrationPatternGrid, indexInPatterToRepeat);
-                        }
-//                        vibrator.vibrate(vibrationPatternA, indexInPatterToRepeat);
-                        Log.i(ON_TAP, "vibrating left");
-                    }
-                    else{Toast.makeText(getApplicationContext(), R.string.message_right, Toast.LENGTH_SHORT)
-                            .show();
-                        vibrator.vibrate(vibrationPatternB, indexInPatterToRepeat);
-                        Log.i(ON_TAP, "vibrating right");
-                    }
-
-//                    Log.i(ON_TAP, Integer.toString(mCalendar.get(Calendar.HOUR)));
-//                    Log.i(ON_TAP, Integer.toString(mCalendar.get(Calendar.MINUTE)));
-                    // Log.i(ON_TAP, "vibrating... x: " + x + " y: " + y);
-                    // Log.i(ON_TAP, VIBRATE_MESSAGE);
-                    break;
             }
             invalidate();
         }
 
+        /**
+         * Draw the watch face with hour, minute, and second hands
+         * @param canvas
+         * @param bounds
+         */
         @Override
         public void onDraw(Canvas canvas, Rect bounds) {
             long now = System.currentTimeMillis();
@@ -479,6 +502,10 @@ public class TouchTime extends CanvasWatchFaceService {
             }
         }
 
+        /**
+         * Called to inform you of the watch face becoming visible or hidden
+         * @param visible
+         */
         @Override
         public void onVisibilityChanged(boolean visible) {
             super.onVisibilityChanged(visible);
@@ -548,6 +575,34 @@ public class TouchTime extends CanvasWatchFaceService {
                         - (timeMs % INTERACTIVE_UPDATE_RATE_MS);
                 mUpdateTimeHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, delayMs);
             }
+        }
+
+        /**
+         * Uses the given vibration pattern to output vibrations from the device.
+         * @param vibPattern
+         */
+        private void vibrate(long[] vibPattern) {//int [] vibs) {
+            PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+
+            PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK,
+                    "WatchFaceWakelockTag"); // note WakeLock spelling
+
+            final int indexInPatternToRepeat = -1;
+
+            int duration = 0;
+            for (int i = 0; i < vibPattern.length; i++){
+                duration += vibPattern[i];
+            }
+//            Log.i(ON_TAP, Integer.toString(duration));
+            Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+            wakeLock.acquire();
+            vibrator.vibrate(vibPattern, indexInPatternToRepeat);
+            try{
+                TimeUnit.MILLISECONDS.sleep(duration);   // delay wakelock for duration of vibration
+            }
+            catch (InterruptedException e){}
+            wakeLock.release();
+            Log.i(ON_TAP, "Vibration Complete");
         }
     }
 }
