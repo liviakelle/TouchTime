@@ -44,7 +44,7 @@ public class VibrationMethods {
             }
             // Delay in between hours and minutes
             vibPatList.addAll(signalVib);
-            Log.i("VIB", vibs[0] + " long vibration(s (hours)");
+            Log.i("VIB", vibs[0] + " long vibration(s) (hours)");
         } else {
             vibPatList.addAll(longVib);
             vibPatList.addAll(signalVib);
@@ -57,7 +57,7 @@ public class VibrationMethods {
                 vibPatList.addAll(minuteTensVib);
             }
             vibPatList.addAll(signalVib);
-            Log.i("VIB", vibs[0] + " long vibration(s) (hours)");
+            Log.i("VIB", vibs[1] + " long vibration(s) (10s of minutes)");
         }
 
         if (vibs[2] != 0) {
@@ -65,6 +65,7 @@ public class VibrationMethods {
             for (int i = 0; i < vibs[2]; i++) {
                 vibPatList.addAll(minuteOnesVib);
             }
+            Log.i("VIB", vibs[2] + " short vibration(s) (minutes)");
         }
 
 //            Log.i(ON_TAP, vibPatList.toString());
@@ -73,6 +74,7 @@ public class VibrationMethods {
         Long[] tempHold = vibPatList.toArray(new Long[vibPatList.size()]);
         for (int i = 0; i < tempHold.length; i++) {
             vibPattern[i] = tempHold[i].longValue();
+            Log.i("test", Long.toString(vibPattern[i]));
         }
 
         return vibPattern;

@@ -368,6 +368,7 @@ public class TouchTime extends CanvasWatchFaceService {
         /**
          * Captures tap event (and tap type).
          * Method to hold commands when the watch face is interacted with a touch
+         * This is the "main" function of our application.
          * @param tapType
          * @param x
          * @param y
