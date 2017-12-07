@@ -1,0 +1,21 @@
+For Christopher McDonald / Whoever may want to run this on an emulator:
+
+Install Android Studio and open the project TouchTime on it
+
+Install an android emulator from Tools -> Android -> AVD Manager
+We used an Android Wear Round API 26 for our emulation - the recommended one to install.
+
+Select "RUN" (the green play button) from the upper menu in Android Studio.
+If no available virtual device from the select deployment target window, create a new virtual device.
+Once you have an available AVD, select it and press ok.
+	If the deployment target doesn't come up, but it's a window asking you to change configurations...
+	make sure that gradle has completed its sync - usually just requires waiting a minute.
+
+If the dog indicating our application does not show on the watch face, swipe right-to-left to access
+the watch face selection menu - our application will be on the bottom of the list.
+NOTE - the application will be showing you the time at UTC 00:00. 
+
+Make sure to bring up the "4: Run" panel from the bottom left of Android Studio.
+This panel will display the logcat messages that we use to display the vibrations produced.
+
+If you have any issues or questions, please do not hesitate to email us - reachable at our mcmaster emails.
