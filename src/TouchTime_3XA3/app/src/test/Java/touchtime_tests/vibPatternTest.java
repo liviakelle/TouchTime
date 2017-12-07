@@ -4,17 +4,16 @@ package touchtime_tests;
  * Created by Evan Ansell on 2017-11-26.
  */
 
-import android.util.Log;
-
 import com.example.mattpo.touchtime_3xa3.VibrationMethods;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
-
 import static org.junit.Assert.*;
 
+/**
+ * Tests the vibrationPatternMaker method from the VibrationMethods class.
+ */
 public class vibPatternTest {
 
     int[] vibCount;
@@ -38,6 +37,9 @@ public class vibPatternTest {
     }
 
     @Test
+    /**
+     * Tests for the minimum possible time vibration-wise: 1:00
+     */
     public void minTime() {
         vibCount[0] = 1; vibCount[1] = 0; vibCount[2] = 0;
         expected = new long[4];
@@ -51,6 +53,9 @@ public class vibPatternTest {
     }
 
     @Test
+    /**
+     * Tests for the maximum possible time vibration-wise: 12:59
+     */
     public void maxTime() {
         vibCount[0] = 12; vibCount[1] = 5; vibCount[2] = 9;
         expected = new long[56];
@@ -87,6 +92,9 @@ public class vibPatternTest {
     }
 
     @Test
+    /**
+     * Tests for the vibrations at 12:00 - a time that has different conditions than the others.
+     */
     public void hour12Test() {
         vibCount[0] = 12; vibCount[1] = 0; vibCount[2] = 0;
         expected = new long[26];
