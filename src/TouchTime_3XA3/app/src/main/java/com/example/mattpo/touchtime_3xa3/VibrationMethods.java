@@ -46,9 +46,11 @@ public class VibrationMethods {
             vibPatList.addAll(signalVib);
             Log.i("VIB", vibs[0] + " long vibration(s (hours)");
         } else {
-            vibPatList.addAll(longVib);
+            for (int i = 0; i < 12; i++) {
+                vibPatList.addAll(hourVib);
+            }
             vibPatList.addAll(signalVib);
-            Log.i("VIB", "1 extra-long vibration (hour = 12)");
+            Log.i("VIB", " long vibration(s (hours)");
         }
 
         if (vibs[1] != 0) {
